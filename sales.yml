@@ -1,0 +1,70 @@
+# config data bases test
+# config bus
+spring:
+  # config Rabbitmq
+  cloud:
+    stream:
+      #bindings:
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: rabbitmq.train.air.c.transoft.bo #192.168.100.110
+                port: 5672
+                username: admin
+                password: admin
+  #profiles: test
+  #jmx:
+    #enabled: false
+# Datasource and JPA configuration to be used for using the same tokenstore as the authorization server for
+# the defined resource server. Note that there can't be 2 different root nodes, so datasource falls under the "spring" node.
+  datasource:
+    url: jdbc:mysql://db.train.air.c.transoft.bo:3306/sales  #192.168.110.116
+    username: airdbuser
+    password: Transoft1!
+    driver-class: com.mysql.jdbc.Driver
+    #initialize: true
+    #separator: ^
+    #continueOnError: false
+    #schema: classpath:/db-scripts/0.0.1/schema.sql
+    #data: classpath:/db-scripts/0.0.1/masterData.sql
+#
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      #ddl-auto: create
+      show_sql: true
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+# Logging settings.
+logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: 
+    com.transoft.completeair.sales: DEBUG
+
+  # Logger-specific levels.
+  loggers:
+
+    # Redirects SQL logs to a separate file
+    org.hibernate.SQL: DEBUG
+    org.springframework.web: DEBUG
+
+# Note: import disable mode product and active mode Dev
+server:
+  port: 8088
+# config eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka.train.air.c.transoft.bo:8761/eureka/  #192.168.110.111
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${server.port}
+
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://oauth.train.air.c.transoft.bo:9999/uaa/api/user  #192.168.110.111

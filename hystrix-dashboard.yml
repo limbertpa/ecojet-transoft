@@ -1,0 +1,23 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: hystrix-dashboard
+  config:
+    name: hystrix-dashboard
+#security:
+  #ignored: true
+turbine:
+  aggregator:
+    clusterNameExpression: 'CUSTOMERS'
+  appConfig: fare-control,flight-control,sales,pnr
+  clusterNameExpression: metadata['cluster']
+# config eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka.train.air.c.transoft.bo:8761/eureka/  #192.168.110.111
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${server.port}
+  
