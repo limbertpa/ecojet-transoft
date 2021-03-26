@@ -28,14 +28,14 @@ logging:
 
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
   level: 
-    com.transoft.completeair.mrn: DEBUG
+    com.transoft.completeair.mrn: DEBUG, ERROR
 
   # Logger-specific levels.
   loggers:
 
     # Redirects SQL logs to a separate file
-    org.hibernate.SQL: DEBUG
-    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG, ERROR
+    org.springframework.web: DEBUG, ERROR
 
 # Note: import disable mode product and active mode Dev
 server:
@@ -52,7 +52,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: rabbitmq.train.air.c.transoft.bo #192.168.110.110
+                host: 192.168.120.114 #192.168.110.110
                 port: 5672
                 username: admin
                 password: admin
@@ -61,12 +61,12 @@ kieServer:
   user: kieserver
   password: kieserver,.!
   url: http://brules.c.transoft.bo:8080/kie-server/services/rest/server
-  containerId: fare-engine-training
+  containerId: fare-engine-ecojet
 #Config Eureka
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka.train.air.c.transoft.bo:8761/eureka/  #192.168.110.111
+      defaultZone: http://192.168.120.102:8761/eureka/  #192.168.110.111
   instance:
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}
@@ -74,4 +74,4 @@ eureka:
 security:
   oauth2:
     resource:
-      userInfoUri: http://oauth.train.air.c.transoft.bo:9999/uaa/api/user  #192.168.110.111
+      userInfoUri: http://192.168.120.102:9999/uaa/api/user  #192.168.110.111

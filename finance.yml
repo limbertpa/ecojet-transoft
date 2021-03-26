@@ -8,6 +8,10 @@ spring:
           binder: rabbit1
           destination: pnr.invoice.sold
           group: pnrinvoicesoldgroup
+        pnrInvoiceWithSoldChannel:
+          binder: rabbit1
+          destination: pnr.invoicewith.sold
+          group: pnrinvoicewithsoldgroup  
         pnrActiveFinanceChannel:
           binder: rabbit1
           destination: pnrF.active
@@ -40,13 +44,31 @@ spring:
           destination: cargo.active
           content-type: application/json
           group: cargoactivegroup
+        cargoInvoiceCancelChannel:
+          binder: rabbit1
+          destination: cargo.invoice.cancel
+          group: cargoinvoicecancelgroup
+        invoiceClsZxyChannel:
+          binder: rabbit1
+          destination: zxy.invoice.clzxy
+          group: zxyinvoiceclzxygroup
+        invoiceClsZxyRespCargoChannel:
+          binder: rabbit1
+          destination: zxy.invoice.resp.cargo
+          content-type: application/json
+          group: zxyinvoicerespcargogroup
+        invoiceClsZxyRespPnrChannel:
+          binder: rabbit1
+          destination: zxy.invoice.resp.pnr
+          content-type: application/json
+          group: zxyinvoiceresppnrgroup
       binders:
         rabbit1:
           type: rabbit
           environment:
             spring:
               rabbitmq:
-                host: rabbitmq.train.air.c.transoft.bo #config ip rabbitmq 192.168.110.110
+                host: 192.168.120.114 #config ip rabbitmq 192.168.110.110
                 port: 5672
                 username: admin
                 password: admin
@@ -56,7 +78,7 @@ spring:
 # Datasource and JPA configuration to be used for using the same tokenstore as the authorization server for
 # the defined resource server. Note that there can't be 2 different root nodes, so datasource falls under the "spring" node.
   datasource:
-    url: jdbc:mysql://db.train.air.c.transoft.bo:3306/finance  #192.168.110.116
+    url: jdbc:mysql://192.168.120.110:3306/finance  #192.168.110.116
     username: airdbuser
     password: Transoft1!
     driver-class: com.mysql.jdbc.Driver
@@ -91,7 +113,7 @@ serviceOauth:
   login: http://oauth-service/uaa/oauth/token?client_id=
   refresh: http://oauth-service/uaa/oauth/token?grant_type=refresh_token&refresh_token=
   logout: http://oauth-service/uaa/api/logout-up
-  account: http://oauth.train.air.c.transoft.bo:9999/uaa/api/account #192.168.110.111
+  account: http://192.168.120.102:9999/uaa/api/account #192.168.110.111
 # Note: import disable mode product and active mode Dev
 server:
   port: 8089
@@ -99,7 +121,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka.train.air.c.transoft.bo:8761/eureka/  #192.168.110.111
+      defaultZone: http://192.168.120.102:8761/eureka/  #192.168.110.111
   instance:
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}
@@ -107,5 +129,5 @@ eureka:
 security:
   oauth2:
     resource:
-      userInfoUri: http://oauth.train.air.c.transoft.bo:9999/uaa/api/user  #192.168.110.111
+      userInfoUri: http://192.168.120.102:9999/uaa/api/user  #192.168.110.111
 

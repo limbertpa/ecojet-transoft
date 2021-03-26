@@ -16,7 +16,7 @@ turbine:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka.train.air.c.transoft.bo:8761/eureka/  #192.168.110.111
+      defaultZone: http://192.168.120.102:8761/eureka/  #192.168.110.111
   instance:
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}

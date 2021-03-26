@@ -28,7 +28,7 @@ logging:
 
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
   level: 
-    com.transoft.completeair.kjarservice: DEBUG
+    com.transoft.completeair.kjarservice: WARN
 
   # Logger-specific levels.
   #loggers:
@@ -39,17 +39,20 @@ logging:
 # config deploy jkar kie-server
 kie:
   #172.16.0.104 ip public
-  server: http://brules.c.transoft.bo:8080/kie-server/services/rest/server
+  server: http://brules.c.transoft.bo:8090/kie-server/services/rest/server
   user: kieserver
   pass: kieserver,.!
   projects:
-    fare-engine: fare-engine-training@/home/debian/fare-engine
+    fare-engine: fare-engine-ecojet@/home/debian/fare-engine
     other-container: /path/to/project
+  versions:
+    fare-engine: 3
+    other-container: 3.0.1
   goals:
     - clean
     - deploy
   profiles:
-    - development
+    - ecojet
 # Note: import disable mode product and active mode Dev
 server:
   port: 8090
@@ -57,7 +60,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka.train.air.c.transoft.bo:8761/eureka/  #192.168.110.111
+      defaultZone: http://192.168.120.102:8761/eureka/  #192.168.110.111
   instance:
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}
@@ -65,4 +68,4 @@ eureka:
 security:
   oauth2:
     resource:
-      userInfoUri: http://oauth.train.air.c.transoft.bo:9999/uaa/api/user  #192.168.110.111
+      userInfoUri: http://192.168.120.102:9999/uaa/api/user  #192.168.110.111

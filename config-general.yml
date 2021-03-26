@@ -13,14 +13,18 @@ spring:
           binder: rabbit1
           destination: cargo.active.cg
           content-type: application/json
-          group: cargoactivecggroup        
+          group: cargoactivecggroup
+        cargoConfigGeneralCancelChannel:
+          binder: rabbit1
+          destination: cargo.cancel.kardex
+          group: cargocancelkardexgroup
       binders:
         rabbit1:
           type: rabbit
           environment:
             spring:
               rabbitmq:
-                host: rabbitmq.train.air.c.transoft.bo #192.168.110.110
+                host: 192.168.120.114 #192.168.110.110
                 port: 5672
                 username: admin
                 password: admin
@@ -33,7 +37,7 @@ spring:
 # Datasource and JPA configuration to be used for using the same tokenstore as the authorization server for
 # the defined resource server. Note that there can't be 2 different root nodes, so datasource falls under the "spring" node.
   datasource:
-    url: jdbc:mysql://db.train.air.c.transoft.bo:3306/config_general #192.168.109.34
+    url: jdbc:mysql://192.168.120.110:3306/config_general #192.168.109.34
     username: airdbuser
     password: Transoft1!
     driver-class: com.mysql.jdbc.Driver
@@ -64,16 +68,15 @@ spring:
 
   #velocity:
     #resourceLoaderPath: classpath:/templates/velocity
-
 # Mailing
 mail:
   protocol: smtp
   smtp:
-    host: smtp.gmail.com
-    port: 587
+    host: 200.87.177.122
+    port: 25
   support:
-    username: amerida.transoft@gmail.com
-    password: Transoft1!
+    username: cas@ecojet.bo
+    password: c45p455 
 # Logging settings.
 logging:
 
@@ -96,7 +99,7 @@ serviceOauth:
   login: http://oauth-service/uaa/oauth/token?client_id=
   refresh: http://oauth-service/uaa/oauth/token?grant_type=refresh_token&refresh_token=
   logout: http://oauth-service/uaa/api/logout-up
-  account: http://oauth.train.air.c.transoft.bo:9999/uaa/api/account  #192.168.110.111
+  account: http://192.168.120.102:9999/uaa/api/account  #192.168.110.111
 #
 #tomcat:
   #version: 8.0.32
@@ -104,7 +107,7 @@ serviceOauth:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka.train.air.c.transoft.bo:8761/eureka/  #192.168.110.111
+      defaultZone: http://192.168.120.102:8761/eureka/  #192.168.110.111
   instance:
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}
@@ -112,7 +115,9 @@ eureka:
 security:
   oauth2:
     client:
-      accessTokenUri: http://oauth.train.air.c.transoft.bo:9999/uaa/oauth/token  #192.168.110.111
+      accessTokenUri: http://192.168.120.102:9999/uaa/oauth/token  #192.168.110.111
     resource:
-      userInfoUri: http://oauth.train.air.c.transoft.bo:9999/uaa/api/user  #192.168.110.111
+      userInfoUri: http://192.168.120.102:9999/uaa/api/user  #192.168.110.111
 
+flyway:
+  baselineOnMigrate: true
